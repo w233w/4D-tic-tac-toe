@@ -1,14 +1,3 @@
-'''
-Unfinished
-TODO:
-    1. Game logic to force player play on specific board
-       or anyplace if on special case               ------- Done
-    2. Visual effect to let player know where they can play next
-    3. Simple UI let player able to click (re)start ------- Half Done, Black start screen now.
-    4. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
-    5. Simple UI let player can see who will play next
-    6. Too many magical number, clear the code.
-'''
 import pygame
 from pygame import Vector2
 import numpy as np
@@ -57,7 +46,6 @@ class utils:
     def stage_update(game_info, groupsingle):
         if groupsingle.sprite is None:
             groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
-            state_code = -2
             print('init on ui')
         elif isinstance(groupsingle.sprite, UI):
             if game_info['state_code'] == -2:
@@ -126,8 +114,8 @@ class ChessBoard(pygame.sprite.Sprite):
             -1: pygame.image.load("gray.png")
         }
         self.image = self.image_collection[self.status]
-        image_size = self.image.get_size()[0]
-        self.pos = 136 * abs_pos + Vector2(image_size/2)
+        self.image_size = self.image.get_size()[0]
+        self.pos = 136 * abs_pos + Vector2(self.image_size/2)
         self.rect = self.image.get_rect(center=self.pos)  # 预设128*128，Board间隔8
         self.units = pygame.sprite.Group()
         for i in range(3):
@@ -151,7 +139,10 @@ class ChessBoard(pygame.sprite.Sprite):
         self.parent.unit_status[int(self.abs_pos.x)][int(self.abs_pos.y)] = winner
         self.active = self.status == 0
         self.image = self.image_collection[self.status]
-
+        if self.playable:
+            image_alt = self.image.copy()
+            pygame.draw.rect(image_alt, (255, 0, 0), image_alt.get_rect(), 1)
+            self.image = image_alt
 
 class LargeChessBoard(pygame.sprite.Sprite):
     def __init__(self, pos):
