@@ -1,9 +1,13 @@
 # pygame_4d_tic_tac_toe
 
-## Game start
-"""shell
+## Introduction
+
+The game is advanced version of tic tac toe. Check specific rule on Game Play section.
+
+## Start Game
+```shell
 $python 4d_tic_tac_toe.py
-"""
+```
 
 ## Game Play
 
