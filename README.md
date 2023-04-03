@@ -11,6 +11,10 @@ $python 4d_tic_tac_toe.py
 
 ## Game Play
 
+### !Read First!
+
+**Currently the start game screen is blank, you have to click mouse anywhere on blank screen once to start the game.**
+
 ### 中文
 
 游戏在3*3的9个井字棋的棋盘上进行。\
