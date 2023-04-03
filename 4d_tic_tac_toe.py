@@ -195,11 +195,7 @@ if __name__ == '__main__':
 
     game = pygame.sprite.GroupSingle()
     # state code explain:
-    # -2 for not in game (on start screen)
-    # -1 for tie
-    # 0 for game not end yet
-    # 1 for player one win
-    # 2 for player two win
+    # -2 for not in game (on start screen), -1 for tie, 0 for game not end yet, 1 for player one win, 2 for player two win
     game_info = {'state_code': 0, 'player': 1}
     running = True
     while running:
