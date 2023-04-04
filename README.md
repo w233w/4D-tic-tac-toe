@@ -40,9 +40,8 @@ The player who owns the chessboard 3 in a row win.
 
 ## TODO
 
-1. Simple UI let player able to click (re)start -- Half Done, Blank start screen now.
-2. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
-3. Simple UI let player can see who will play next
+1. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
+2. Simple UI let player can see who will play next
 
 ## Known Bugs
 
