@@ -3,7 +3,7 @@
 ## Introduction
 
 This game is an advanced version of tic tac toe. You can find the rules on Game Play section. \
-Game development from pygame.
+The game was developed using pygame.
 
 ## Start Game
 ```shell
