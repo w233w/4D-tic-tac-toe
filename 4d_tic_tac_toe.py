@@ -4,6 +4,10 @@ import numpy as np
 
 
 class utils:
+    Black = 0, 0, 0
+    White = 255, 255, 255
+    Red = 255, 0, 0
+
     @staticmethod
     def check_winner(board):
         board = board.flatten().tolist()
@@ -48,15 +52,13 @@ class utils:
             groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
             print('init on ui')
         elif isinstance(groupsingle.sprite, UI):
-            if game_info['state_code'] == -2:
+            if game_info['state_code'] == 0:
                 groupsingle.add(LargeChessBoard(Vector2(WIDTH/2, HEIGHT/2)))
                 print('change to board')
-                game_info['state_code'] = 0
         elif isinstance(groupsingle.sprite, LargeChessBoard):
             if game_info['state_code'] != 0:
                 groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
                 print('change to ui')
-                game_info['state_code'] = 0
 
     @staticmethod
     def mouse_event_handler(event_list, event_type, button):
@@ -141,23 +143,19 @@ class ChessBoard(pygame.sprite.Sprite):
         self.image = self.image_collection[self.status]
         if self.playable:
             image_alt = self.image.copy()
-            pygame.draw.rect(image_alt, (255, 0, 0), image_alt.get_rect(), 1)
+            pygame.draw.rect(image_alt, utils.Red, image_alt.get_rect(), 1)
             self.image = image_alt
 
 class LargeChessBoard(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
-        self.pos = pos
         self.unit_status = np.zeros((3, 3), dtype=np.int32)
-        self.image = pygame.image.load("bomb.png")
-        self.rect = self.image.get_rect(center=self.pos)
         self.units = pygame.sprite.Group()
+        self.rule = 'strict'
+        self.next_board = Vector2(1, 1)
         for i in range(3):
             for j in range(3):
                 self.units.add(ChessBoard(Vector2(i, j), self))
-        self.rule = 'strict'
-        self.next_board = Vector2(1, 1)
-
     def update(self, game_info, event_list):
         if self.unit_status[int(self.next_board.x)][int(self.next_board.y)] != 0:
             self.rule = 'free'
@@ -171,13 +169,10 @@ class LargeChessBoard(pygame.sprite.Sprite):
 class UI(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
-        self.pos = pos
-        self.image = pygame.image.load("bomb.png")
-        self.rect = self.image.get_rect(center=self.pos)
-
+    
     def update(self, game_info, event_list):
         if utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
-            game_info['state_code'] = -2
+            game_info['state_code'] = 0
 
 
 if __name__ == '__main__':
@@ -192,16 +187,27 @@ if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode(SIZE)
     clock = pygame.time.Clock()
-
+    font = pygame.font.SysFont('timesnewroman',  30)
+    text_set = {
+        -2: ["Click to start"],
+        -1: ["Tie"],
+        1: ["Player One Win!", "Click to restart"],
+        2: ["Player Two Win!", "Click to restart"]
+    }
     game = pygame.sprite.GroupSingle()
     # state code explain:
-    # -2 for not in game (on start screen), -1 for tie, 0 for game not end yet, 1 for player one win, 2 for player two win
-    game_info = {'state_code': 0, 'player': 1}
+    # -2 for not in game (on start screen), -1 for tie, 0 for on game
+    # 1 for player one win, 2 for player two win
+    game_info = {'state_code': -2, 'player': 1}
     running = True
     while running:
         clock.tick(FPS)
         utils.stage_update(game_info, game)
         screen.fill(pygame.Color(255, 255, 255))
+        if game_info['state_code'] != 0:
+            for i, t in enumerate(text_set[game_info['state_code']]):
+                info = font.render(t, False, utils.Black, utils.White)
+                screen.blit(info, (50, 50 + 50 * i))
         # 点×时退出。。
         event_list = pygame.event.get()
         for event in event_list:
