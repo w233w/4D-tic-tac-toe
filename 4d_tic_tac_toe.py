@@ -82,8 +82,8 @@ class ChessBoardUnit(pygame.sprite.Sprite):
             2: pygame.image.load("cross.png"),  # change to X
         }
         self.image = self.image_collection[self.status]
-        image_size = self.image.get_size()[0]
-        self.pos = 136 * parent.abs_pos + 44 * abs_pos + Vector2(image_size/2)
+        image_size = self.image.get_size()
+        self.pos = 136 * parent.abs_pos + 44 * abs_pos + Vector2(image_size[0]/2)
         self.rect = self.image.get_rect(center=self.pos)  # 预设40*40, Unit间隔4
 
     def update(self, game_info, event_list):
@@ -116,8 +116,8 @@ class ChessBoard(pygame.sprite.Sprite):
             -1: pygame.image.load("gray.png")
         }
         self.image = self.image_collection[self.status]
-        self.image_size = self.image.get_size()[0]
-        self.pos = 136 * abs_pos + Vector2(self.image_size/2)
+        image_size = self.image.get_size()[0]
+        self.pos = 136 * abs_pos + Vector2(image_size/2)
         self.rect = self.image.get_rect(center=self.pos)  # 预设128*128，Board间隔8
         self.units = pygame.sprite.Group()
         for i in range(3):
@@ -141,7 +141,7 @@ class ChessBoard(pygame.sprite.Sprite):
         self.parent.unit_status[int(self.abs_pos.x)][int(self.abs_pos.y)] = winner
         self.active = self.status == 0
         self.image = self.image_collection[self.status]
-        if self.playable:
+        if self.active and self.playable:
             image_alt = self.image.copy()
             pygame.draw.rect(image_alt, utils.Red, image_alt.get_rect(), 1)
             self.image = image_alt
