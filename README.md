@@ -1,8 +1,9 @@
-# pygame_4d_tic_tac_toe
+# 4D tic tac toe
 
 ## Introduction
 
-This game is an advanced version of tic tac toe. You can find the rules on Game Play section.
+This game is an advanced version of tic tac toe. You can find the rules on Game Play section. \
+Game development from pygame.
 
 ## Start Game
 ```shell
