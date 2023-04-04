@@ -46,4 +46,3 @@ The player who owns the chessboard 3 in a row win.
 ## Known Bugs
 
 * Locked chessboard also show the border and can't be removed. 
-* Click while fast mouse moving may cause unexpected error.
