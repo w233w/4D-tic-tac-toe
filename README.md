@@ -29,14 +29,14 @@ $python 4d_tic_tac_toe.py
 
 ### English
 
-Game will be hold on a 3*3 tic tac toe chessboard. \
-THe first ever play have to be played on middle chessboard. \
-The grid you played on chessboard will determine the next chessboard you can play, a red border will help you where it is. \
-eg. Player one play on [2, 2] in a chessboard, next player must play on [2, 2] chessboard over whole game board except the spcial case. \
-When a chessboard finished, if any player has a 3 of kind on chessboard, the player will own the board. Other wise, chess boardlocked without owner. \
-The special case: If next chessboard a player have to play is locked, that player gain a free play. \
-Locked chessboard become inactive. \
-The player who's owned chessboard achieve 3 of a kind win.
+The game will be held on a 3*3 tic-tac-toe chessboard. \
+The first move has to be played on the middle chessboard.
+The grid you played on the chessboard will determine the next chessboard you can play, a red border will help you where it is. \
+eg. Player one plays on [2, 2] on a chessboard, next player must play on [2, 2] chessboard over the whole game board except the special case. \
+On the chessboard, if any player has 3 of the same marks in a row, the player will own the chessboard, and the chessboard will lock. If the chessboard finished without a winner, the chessboard will be locked without an owner. \
+The special case: If the next chessboard one player has to play to is locked, that player gains "free play" which means can play anywhere. \
+The locked chessboard becomes inactive. \
+The player who owns the chessboard 3 in a row win.
 
 ## TODO
 
