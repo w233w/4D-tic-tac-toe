@@ -40,12 +40,9 @@ The player who owns the chessboard 3 in a row win.
 
 ## TODO
 
-1. Game logic to force player play on specific board or anyplace if on special case -- Done
-2. Visual effect to let player know where they can play next -- Half Done, using a red border as notice.
-3. Simple UI let player able to click (re)start -- Half Done, Blank start screen now.
-4. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
-5. Simple UI let player can see who will play next
-6. Too many magical number, clear the code.
+1. Simple UI let player able to click (re)start -- Half Done, Blank start screen now.
+2. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
+3. Simple UI let player can see who will play next
 
 ## Known Bugs
 
