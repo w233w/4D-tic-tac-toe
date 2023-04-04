@@ -43,7 +43,3 @@ The player who owns the chessboard 3 in a row win.
 
 1. Simple UI let player click info buttom to read the game rule --Maybe put the rule on start screen
 2. Simple UI let player can see who will play next
-
-## Known Bugs
-
-* Locked chessboard also show the border and can't be removed. 
