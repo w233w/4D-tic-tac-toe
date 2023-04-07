@@ -38,15 +38,6 @@ class utils:
         return -1
 
     @staticmethod
-    def check_mouse_in_spirte(sprite_center, sprite_size):
-        x, y = pygame.mouse.get_pos()
-        sprite_x, sprite_y = sprite_center
-        half_size = sprite_size / 2
-        x_in = sprite_x - half_size <= x <= sprite_x + half_size
-        y_in = sprite_y - half_size <= y <= sprite_y + half_size
-        return x_in and y_in
-
-    @staticmethod
     def stage_update(game_info, groupsingle):
         if groupsingle.sprite is None:
             groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
@@ -90,7 +81,7 @@ class ChessBoardUnit(pygame.sprite.Sprite):
         if not self.active:
             return
         if self.parent.playable:
-            if utils.check_mouse_in_spirte(self.pos, self.image.get_size()[0]):
+            if self.rect.collidepoint(pygame.mouse.get_pos()):
                 if utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
                     game_info['player'] = 3 - game_info['player']
                     self.status = game_info['player']
