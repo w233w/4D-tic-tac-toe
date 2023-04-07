@@ -3,10 +3,10 @@ from pygame import Vector2
 import numpy as np
 
 
-class utils:
-    Black = 0, 0, 0
-    White = 255, 255, 255
-    Red = 255, 0, 0
+class Utils:
+    Black = pygame.color.Color(0, 0, 0)
+    White = pygame.color.Color(255, 255, 255)
+    Red = pygame.color.Color(255, 0, 0)
 
     @staticmethod
     def check_winner(board):
@@ -38,17 +38,17 @@ class utils:
         return -1
 
     @staticmethod
-    def stage_update(game_info, groupsingle):
-        if groupsingle.sprite is None:
-            groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
+    def stage_update(game_info, group_single):
+        if group_single.sprite is None:
+            group_single.add(UI())
             print('init on ui')
-        elif isinstance(groupsingle.sprite, UI):
+        elif isinstance(group_single.sprite, UI):
             if game_info['state_code'] == 0:
-                groupsingle.add(LargeChessBoard(Vector2(WIDTH/2, HEIGHT/2)))
+                group_single.add(LargeChessBoard())
                 print('change to board')
-        elif isinstance(groupsingle.sprite, LargeChessBoard):
+        elif isinstance(group_single.sprite, LargeChessBoard):
             if game_info['state_code'] != 0:
-                groupsingle.add(UI(Vector2(WIDTH/2, HEIGHT/2)))
+                group_single.add(UI())
                 print('change to ui')
 
     @staticmethod
@@ -58,7 +58,7 @@ class utils:
                 if event.button == button:
                     return True
         return False
-            
+
 
 class ChessBoardUnit(pygame.sprite.Sprite):
     def __init__(self, abs_pos, parent):
@@ -82,7 +82,7 @@ class ChessBoardUnit(pygame.sprite.Sprite):
             return
         if self.parent.playable:
             if self.rect.collidepoint(pygame.mouse.get_pos()):
-                if utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
+                if Utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
                     game_info['player'] = 3 - game_info['player']
                     self.status = game_info['player']
                     self.parent.unit_status[int(self.abs_pos.x)][int(self.abs_pos.y)] = self.status
@@ -127,18 +127,19 @@ class ChessBoard(pygame.sprite.Sprite):
             self.playable = True
         self.units.update(game_info, event_list)
         self.units.draw(screen)
-        winner = utils.check_winner(self.unit_status)
+        winner = Utils.check_winner(self.unit_status)
         self.status = winner
         self.parent.unit_status[int(self.abs_pos.x)][int(self.abs_pos.y)] = winner
         self.active = self.status == 0
         self.image = self.image_collection[self.status]
         if self.active and self.playable:
             image_alt = self.image.copy()
-            pygame.draw.rect(image_alt, utils.Red, image_alt.get_rect(), 1)
+            pygame.draw.rect(image_alt, Utils.Red, image_alt.get_rect(), 1)
             self.image = image_alt
 
+
 class LargeChessBoard(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.unit_status = np.zeros((3, 3), dtype=np.int32)
         self.units = pygame.sprite.Group()
@@ -147,22 +148,23 @@ class LargeChessBoard(pygame.sprite.Sprite):
         for i in range(3):
             for j in range(3):
                 self.units.add(ChessBoard(Vector2(i, j), self))
+
     def update(self, game_info, event_list):
         if self.unit_status[int(self.next_board.x)][int(self.next_board.y)] != 0:
             self.rule = 'free'
         else:
             self.rule = 'strict'
         self.units.update(game_info, event_list)
-        game_info['state_code'] = utils.check_winner(self.unit_status)
+        game_info['state_code'] = Utils.check_winner(self.unit_status)
         self.units.draw(screen)
 
 
 class UI(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self):
         super().__init__()
-    
+
     def update(self, game_info, event_list):
-        if utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
+        if Utils.mouse_event_handler(event_list, pygame.MOUSEBUTTONDOWN, 1):
             game_info['state_code'] = 0
 
 
@@ -193,11 +195,11 @@ if __name__ == '__main__':
     running = True
     while running:
         clock.tick(FPS)
-        utils.stage_update(game_info, game)
+        Utils.stage_update(game_info, game)
         screen.fill(pygame.Color(255, 255, 255))
         if game_info['state_code'] != 0:
             for i, t in enumerate(text_set[game_info['state_code']]):
-                info = font.render(t, False, utils.Black, utils.White)
+                info = font.render(t, False, Utils.Black, Utils.White)
                 screen.blit(info, (50, 50 + 50 * i))
         # 点×时退出。。
         event_list = pygame.event.get()
