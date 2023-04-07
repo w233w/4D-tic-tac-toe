@@ -62,7 +62,7 @@ class utils:
 
 class ChessBoardUnit(pygame.sprite.Sprite):
     def __init__(self, abs_pos, parent):
-        super().__init__()
+        pygame.sprite.Sprite.__init__(self)
         self.abs_pos = abs_pos
         self.parent = parent
         self.status = 0
@@ -93,7 +93,7 @@ class ChessBoardUnit(pygame.sprite.Sprite):
 
 class ChessBoard(pygame.sprite.Sprite):
     def __init__(self, abs_pos, parent):
-        super().__init__()
+        pygame.sprite.Sprite.__init__(self)
         self.abs_pos = abs_pos
         self.parent = parent
         self.status = 0
@@ -139,7 +139,7 @@ class ChessBoard(pygame.sprite.Sprite):
 
 class LargeChessBoard(pygame.sprite.Sprite):
     def __init__(self, pos):
-        super().__init__()
+        pygame.sprite.Sprite.__init__(self)
         self.unit_status = np.zeros((3, 3), dtype=np.int32)
         self.units = pygame.sprite.Group()
         self.rule = 'strict'
